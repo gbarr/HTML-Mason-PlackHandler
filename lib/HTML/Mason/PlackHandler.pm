@@ -101,7 +101,11 @@ sub handle_request {
   $interp->set_global('$res', $res);
   $interp->out_method(\$output[0]);
 
-  my %args = %{ $req->parameters };
+  my %args;
+  foreach my $param (keys %{$req->parameters}) {
+    my @p = $req->param($param);
+    $args{$param} = @p > 1 ? \@p : $p[0];
+  }
 
   $comp_path =~ s!^/*!/!;
   my ($file) = $comp_path =~ m!([^/]+)/*$!;

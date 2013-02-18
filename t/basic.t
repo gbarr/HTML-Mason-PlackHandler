@@ -29,6 +29,14 @@ test_psgi(
       is $res->code, 200;
       is $res->content, "before\nabc=1\ndef=2\nafter\n";
 
+      $res = $cb->(GET "http://localhost/args?abc=1;def=9&abc=3");
+      is $res->code, 200;
+      is $res->content, "before\nabc=1\nabc=3\ndef=9\nafter\n";
+
+      $res = $cb->(GET "http://localhost/args?abc=1;def=9");
+      is $res->code, 200;
+      is $res->content, "before\nabc=1\ndef=9\nafter\n";
+
       $res = $cb->(GET "http://localhost/headers", 'X-Test' => "AbC");
       is $res->header('X-Test'), "AbC";
 

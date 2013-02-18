@@ -1,0 +1,8 @@
+<%args>
+  @abc
+  $def
+</%args>
+% foreach my $abc (@abc) {
+abc=<% $abc %>
+% }
+def=<% $def %>
