@@ -31,6 +31,14 @@ test_psgi(
 
       $res = $cb->(GET "http://localhost/headers", 'X-Test' => "AbC");
       is $res->header('X-Test'), "AbC";
+
+      $res = $cb->(GET "http://localhost/redirect");
+      is $res->code, 302;
+      is $res->header('Location'), "/goto";
+
+      $res = $cb->(GET "http://localhost/redirect_301");
+      is $res->code, 301;
+      is $res->header('Location'), "/goto301";
     }
   }
 );
