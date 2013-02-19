@@ -1,0 +1,6 @@
+<%args>
+  $foo
+  $bar
+</%args>
+foo=<% $foo %>
+bar=<% $bar %>

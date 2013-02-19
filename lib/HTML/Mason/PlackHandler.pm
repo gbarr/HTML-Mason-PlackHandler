@@ -107,6 +107,11 @@ sub handle_request {
     $args{$param} = @p > 1 ? \@p : $p[0];
   }
 
+  my $uploads = $req->uploads;
+  foreach my $u (keys %$uploads) {
+    $args{$u} = $uploads->{$u}->filename;
+  }
+
   $comp_path =~ s!^/*!/!;
   my ($file) = $comp_path =~ m!([^/]+)/*$!;
 

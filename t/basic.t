@@ -47,6 +47,17 @@ test_psgi(
       $res = $cb->(GET "http://localhost/redirect_301");
       is $res->code, 301;
       is $res->header('Location'), "/goto301";
+
+      $res = $cb->(
+        POST "http://localhost/upload",
+        Content_Type => 'form-data',
+        Content      => [
+          foo => ["t/foo.txt"],
+          bar => ["t/bar.txt"],
+        ]
+      );
+      is $res->code,    200;
+      is $res->content, "before\nfoo=foo.txt\nbar=bar.txt\nafter\n";
     }
   }
 );
